@@ -8,11 +8,14 @@ options = Options()
 options.add_experimental_option("detach",True)
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
-driver.get("https://www.uxmatters.com/")
+driver.get("https://www.robinsharma.com/")
 driver.maximize_window()
 
 
 links = driver.find_elements("xpath","//a[@href]")
 
 for link in links:
-    print(links)
+    if "style_books__24wOD" in link.get_attribute("innerHTML"):
+        link.click()
+        break
+#book_links  = driver.find_elements("xpath","//")
