@@ -21,8 +21,8 @@ book_picture.click()
 
 try:
     wait = WebDriverWait(driver, 10)
-    new_window = wait.until(EC.new_window_is_opened)
-    driver.switch_to.window(new_window)
+    wait.until(EC.number_of_windows_to_be(2))
+    handles = driver.window_handles
+    driver.switch_to.window(handles[1])
 except WebDriverException as e:
     print(f"Error switching to new window: {e}")
-
