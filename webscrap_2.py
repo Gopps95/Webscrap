@@ -11,18 +11,17 @@ options = Options()
 options.add_experimental_option("detach",True)
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
-driver.get("https://www.robinsharma.com/")
+driver.get("https://www.neuralnine.com/")
 driver.maximize_window()
 
 links = driver.find_elements("xpath","//a[@href]")
 
-book_picture = driver.find_element(By.XPATH,'//img[@alt="Robin Sharma"]')
-book_picture.click()
+for link in links:
+    if "Books" in link.get_attribute("innerHTML"):
+        link.click()
+        break
+book_links = driver.find_elements("xpath","//div[contains(@class,'elementor-column-wrap')][.//h2[text()[contains(.,'7 IN 1')]]][count(.//a)=2]//a")
 
-try:
-    wait = WebDriverWait(driver, 10)
-    wait.until(EC.number_of_windows_to_be(2))
-    handles = driver.window_handles
-    driver.switch_to.window(handles[1])
-except WebDriverException as e:
-    print(f"Error switching to new window: {e}")
+book_links[0].click()
+
+driver.switch_to.window(driver.window_handles[1])
